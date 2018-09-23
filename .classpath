@@ -2,5 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_112"/>
+	<classpathentry kind="lib" path="C:/Users/d068676/Downloads/processing-3.4-windows64/processing-3.4/core/library/core.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
