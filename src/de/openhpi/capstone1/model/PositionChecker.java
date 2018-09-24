@@ -13,6 +13,10 @@ public class PositionChecker implements Subject {
 
     }
 
+    public void updatePosition() {
+        notifyAllObservers();
+    }
+
     @Override
     public void notifyAllObservers() {
         for (Observer oObserver : aObservers) {

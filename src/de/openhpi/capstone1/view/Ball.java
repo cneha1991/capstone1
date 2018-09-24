@@ -2,6 +2,7 @@ package de.openhpi.capstone1.view;
 
 import de.openhpi.capstone1.model.Subject;
 import processing.core.PApplet;
+import processing.core.PVector;
 
 public class Ball extends Observer {
     int rad = 10; // Width of the shape
@@ -22,15 +23,21 @@ public class Ball extends Observer {
     public void setup() {
         display.ellipseMode(display.RADIUS);
         // Set the starting position of the shape
-        xpos = display.width / 2;
-        ypos = display.height / 2;
+        xpos = (int) display.random(rad, display.width - rad);
+        ypos = (int) display.random(rad, display.height - rad);
     }
 
     @Override
     public void draw() {
         display.noStroke();
-        display.fill(204);
+        display.fill(255, 0, 0);
+        // Draw the shape
+        display.ellipse(xpos, ypos, rad, rad);
+    }
 
+    public void checkCollision(Handle oHandleView) {
+        PVector posHandle = oHandleView.getPosition();
+        PVector dimHandle = oHandleView.getDimension();
         // Update the position of the shape
         xpos = xpos + (xspeed * xdirection);
         ypos = ypos + (yspeed * ydirection);
@@ -40,16 +47,18 @@ public class Ball extends Observer {
         if (xpos > display.width - rad || xpos < rad) {
             xdirection *= -1;
         }
-        if (ypos > display.height - rad || ypos < rad) {
+        if (ypos < rad || ((ypos > display.height - dimHandle.y - rad)
+                && (xpos - rad >= posHandle.x && xpos + rad <= posHandle.x + dimHandle.x))) {
             ydirection *= -1;
         }
 
-        // Draw the shape
-        display.ellipse(xpos, ypos, rad, rad);
+        // draw();
     }
 
     @Override
     public void update() {
-
+        if (display.keyCode == display.ENTER) {
+            setup();
+        }
     }
 }

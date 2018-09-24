@@ -1,18 +1,16 @@
 package de.openhpi.capstone1.starter;
 
-import java.awt.event.KeyEvent;
-
+import de.openhpi.capstone1.controller.PositionController;
 import de.openhpi.capstone1.model.PositionChecker;
-import de.openhpi.capstone1.model.Subject;
 import de.openhpi.capstone1.view.Ball;
 import de.openhpi.capstone1.view.Handle;
-import de.openhpi.capstone1.view.Observer;
 import processing.core.PApplet;
 
 public class Project extends PApplet {
-    private Observer BallView;
-    private Observer HandleView;
-    private Subject oPositionChecker;
+    private Ball BallView;
+    private Handle HandleView;
+    private PositionChecker oPositionChecker;
+    private PositionController oPositionController;
 
     @Override
     public void settings() {
@@ -26,6 +24,7 @@ public class Project extends PApplet {
         noStroke();
         frameRate(30);
         oPositionChecker = new PositionChecker();
+        oPositionController = new PositionController(oPositionChecker);
         BallView = new Ball(this, oPositionChecker);
         HandleView = new Handle(this, oPositionChecker);
         BallView.setup();
@@ -33,20 +32,15 @@ public class Project extends PApplet {
 
     @Override
     public void draw() {
-        background(102);
+        background(255, 255, 255);
         BallView.draw();
         HandleView.draw();
+        BallView.checkCollision(HandleView);
     }
 
     @Override
     public void keyPressed() {
-        if (key == CODED) {
-            if (keyCode == KeyEvent.VK_LEFT) {
-                HandleView.update();
-            } else if (keyCode == KeyEvent.VK_RIGHT) {
-                HandleView.update();
-            }
-        }
+        oPositionController.HandleKeyPress();
     }
 
 }
